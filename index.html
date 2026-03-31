@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SOUL ID — runtime-agnostic identity spec for autonomous AI agents. Define who your agent is, not just what it does." />
+  <title>SOUL ID — Identity for autonomous entities</title>
+  <style>
+    :root {
+      --bg: #07070f;
+      --bg-card: #0f0f1a;
+      --bg-code: #0d0d1f;
+      --border: rgba(124, 58, 237, 0.2);
+      --border-subtle: rgba(255,255,255,0.06);
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --cyan: #06b6d4;
+      --cyan-light: #67e8f9;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Dot grid background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(124,58,237,0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow blob */
+    body::after {
+      content: "";
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7,7,15,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--purple-light); }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(6,182,212,0.25);
+      background: rgba(6,182,212,0.06);
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--purple-light), var(--cyan-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-dim);
+      max-width: 580px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 11px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #6d28d9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(124,58,237,0.4);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    /* Code preview */
+    .code-preview {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .code-preview-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .code-preview-label {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .code-preview pre {
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .json-key   { color: var(--purple-light); }
+    .json-str   { color: var(--cyan-light); }
+    .json-brace { color: var(--text-muted); }
+
+    /* Sections */
+    section { padding: 96px 0; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+
+    /* Problem cards */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* What is */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .what-grid { grid-template-columns: 1fr; }
+    }
+
+    .what-text p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .what-text p:last-child { margin-bottom: 0; }
+
+    .id-anatomy {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      font-family: var(--font-mono);
+    }
+
+    .id-anatomy .id-string {
+      font-size: clamp(13px, 2vw, 16px);
+      color: #fff;
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+
+    .id-anatomy .id-string .ns  { color: var(--purple-light); }
+    .id-anatomy .id-string .arc { color: var(--cyan-light); }
+    .id-anatomy .id-string .ver { color: #fbbf24; }
+    .id-anatomy .id-string .ins { color: #34d399; }
+    .id-anatomy .id-string .sep { color: var(--text-muted); }
+
+    .id-labels {
+      display: flex;
+      gap: 0;
+      font-size: 10px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    .id-label-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .id-label-item .bar {
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+    }
+
+    .bar-ns  { background: var(--purple-light); }
+    .bar-arc { background: var(--cyan-light); }
+    .bar-ver { background: #fbbf24; }
+    .bar-ins { background: #34d399; }
+
+    /* Spec versions */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .spec-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+      display: block;
+    }
+
+    .spec-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+
+    .spec-version {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--purple-light);
+      margin-bottom: 8px;
+    }
+
+    .spec-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .spec-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer CTA */
+    .footer-cta {
+      text-align: center;
+      padding: 96px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-cta h2 {
+      margin-bottom: 16px;
+    }
+
+    .footer-cta p {
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-logo span { color: var(--purple-light); }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 120px 0 80px; }
+      section { padding: 64px 0; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">soul<span>id</span>.io</a>
+      <ul class="nav-links">
+        <li><a href="#spec">Spec</a></li>
+        <li><a href="#what">What is SOUL ID</a></li>
+        <li><a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Open Specification · v0.6</div>
+
+      <h1>Identity for<br><em>autonomous entities.</em></h1>
+
+      <p class="hero-sub">
+        SOUL ID is a runtime-agnostic spec that defines how AI agents are identified, versioned, owned, and trusted across any runtime.
+      </p>
+
+      <div class="cta-group">
+        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-primary">
+          Read the Spec
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 0C3.13 0 0 3.13 0 7c0 3.09 2.01 5.72 4.79 6.65.35.06.48-.15.48-.34v-1.2c-1.94.42-2.35-.94-2.35-.94-.32-.81-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.63.76 2.03.58.06-.45.24-.76.44-.93-1.55-.18-3.18-.78-3.18-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 017 3.58c.59 0 1.19.08 1.75.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7.001 7.001 0 0014 7c0-3.87-3.13-7-7-7z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <!-- Code preview -->
+      <div class="code-preview">
+        <div class="code-preview-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <span class="code-preview-label">soul.json</span>
+        </div>
+        <pre><span class="json-brace">{</span>
+  <span class="json-key">"soul_id"</span>: <span class="json-str">"soulid:custodian:v1:001"</span>,
+  <span class="json-key">"name"</span>: <span class="json-str">"Custodian"</span>,
+  <span class="json-key">"purpose"</span>: <span class="json-str">"Monitor and maintain system stability"</span>,
+  <span class="json-key">"owner"</span>: <span class="json-brace">{</span>
+    <span class="json-key">"id"</span>: <span class="json-str">"soulid"</span>,
+    <span class="json-key">"type"</span>: <span class="json-str">"organization"</span>
+  <span class="json-brace">}</span>
+<span class="json-brace">}</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-label">The Problem</div>
+      <h2>Agents have no persistent identity</h2>
+      <div class="problem-grid">
+        <div class="card">
+          <div class="card-icon">⬡</div>
+          <h3>Agents forget who they are</h3>
+          <p>No persistent identity across runtimes or restarts. Every execution is a blank slate with no continuity.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">◈</div>
+          <h3>No standard ownership</h3>
+          <p>Who controls an agent? Who vouches for it? There's no common layer for expressing provenance or trust.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">◎</div>
+          <h3>Runtime lock-in</h3>
+          <p>Identity tied to a specific platform. An agent defined in OpenClaw can't be recognized in Claude Code or anywhere else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- What is -->
+  <section id="what">
+    <div class="container">
+      <div class="section-label">What is SOUL ID</div>
+      <h2>Identity separate from execution</h2>
+      <div class="what-grid">
+        <div class="what-text">
+          <p>SOUL ID is a structured identity layer for autonomous entities. It defines who an agent is — not where it runs or what model it uses.</p>
+          <p>A Soul Document is a portable JSON file that captures identity, purpose, values, capabilities, lineage, and ownership. It can be loaded into any compatible runtime.</p>
+          <p>An agent defined once in SOUL ID format can be instantiated in OpenClaw, Claude Code, or any future runtime that implements the spec.</p>
+        </div>
+        <div class="id-anatomy">
+          <div style="font-size:11px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">soul_id format</div>
+          <div class="id-string">
+            <span class="ns">soulid</span><span class="sep"> : </span><span class="arc">custodian</span><span class="sep"> : </span><span class="ver">v1</span><span class="sep"> : </span><span class="ins">001</span>
+          </div>
+          <div class="id-labels">
+            <div class="id-label-item">
+              <div class="bar bar-ns"></div>
+              namespace
+            </div>
+            <div class="id-label-item">
+              <div class="bar bar-arc"></div>
+              archetype
+            </div>
+            <div class="id-label-item">
+              <div class="bar bar-ver"></div>
+              version
+            </div>
+            <div class="id-label-item">
+              <div class="bar bar-ins"></div>
+              instance
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Spec -->
+  <section id="spec">
+    <div class="container">
+      <div class="section-label">The Spec</div>
+      <h2>Six layers. One complete stack.</h2>
+      <div class="spec-grid">
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.1.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0001 · v0.1</div>
+          <div class="spec-title">Identity</div>
+          <div class="spec-desc">soul_id format, Soul Document structure, lineage model, lifecycle semantics.</div>
+        </a>
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.2.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0002 · v0.2</div>
+          <div class="spec-title">Trust</div>
+          <div class="spec-desc">Ownership model, cryptographic signatures, trust levels and verification.</div>
+        </a>
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.3.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0003 · v0.3</div>
+          <div class="spec-title">Interoperability</div>
+          <div class="spec-desc">Runtime adapter interface. Reference adapters for OpenClaw and Claude Code.</div>
+        </a>
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.4.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0004 · v0.4</div>
+          <div class="spec-title">Registry</div>
+          <div class="spec-desc">DNS-like resolution protocol. Publish, discover, and resolve Soul Documents.</div>
+        </a>
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.5.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0005 · v0.5</div>
+          <div class="spec-title">Ecosystem</div>
+          <div class="spec-desc">soul CLI, @soulid/core SDK, adapter packages, extension model.</div>
+        </a>
+        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.6.md" target="_blank" rel="noopener" class="spec-card">
+          <div class="spec-version">RFC-SOULID-0006 · v0.6</div>
+          <div class="spec-title">Decentralization</div>
+          <div class="spec-desc">IPFS storage, did:soul method, on-chain anchoring. Full sovereignty.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Footer CTA -->
+  <section class="footer-cta">
+    <div class="container">
+      <div class="section-label">Open Specification</div>
+      <h2>The spec is open.<br>Start here.</h2>
+      <p>MIT License · contributions welcome</p>
+      <div class="cta-group">
+        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-primary">
+          Read the Spec
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 0C3.13 0 0 3.13 0 7c0 3.09 2.01 5.72 4.79 6.65.35.06.48-.15.48-.34v-1.2c-1.94.42-2.35-.94-2.35-.94-.32-.81-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.63.76 2.03.58.06-.45.24-.76.44-.93-1.55-.18-3.18-.78-3.18-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 017 3.58c.59 0 1.19.08 1.75.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7.001 7.001 0 0014 7c0-3.87-3.13-7-7-7z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">soul<span>id</span>.io</span>
+      <ul class="footer-links">
+        <li><a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener">Spec</a></li>
+        <li><a href="https://github.com/soulid-spec/spec/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a></li>
+        <li><a href="https://github.com/soulid-spec/spec/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
