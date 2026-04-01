@@ -886,7 +886,8 @@
     @media (max-width: 600px) {
       .hero { padding: 120px 0 80px; }
       section { padding: 64px 0; }
-      .nav-links { display: none; }
+      .nav-links { display: none !important; }
+      .hamburger { display: flex !important; }
     }
 
     /* hide inactive lang */
@@ -903,11 +904,68 @@
     [lang-flex] { display: none; }
     html[lang="en"] [lang-flex="en"] { display: inline-flex; }
     html[lang="es"] [lang-flex="es"] { display: inline-flex; }
+  
+    /* Hamburger button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 56px;
+      left: 0; right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 24px 24px;
+      gap: 4px;
+      z-index: 99;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-size: 15px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: color 0.2s;
+    }
+    .nav-drawer a:last-child { border-bottom: none; }
+    .nav-drawer a:hover { color: var(--text); }
+
   </style>
   <nav>
     <div class="nav-inner">
       <a href="/" class="nav-logo"><img src="https://agent.soulid.io/soulid-logo.png" alt="SOUL ID" class="nav-logo-img"><span class="nav-logo-text">soul<span class="nav-accent">id</span>.io</span></a>
-                        <ul class="nav-links">
+      <ul class="nav-links">
         <li><a href="/#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
         <li><a href="https://agent.soulid.io" target="_blank" rel="noopener"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a></li>
         <li><a href="/registry" class="nav-active"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a></li>
@@ -918,9 +976,20 @@
       <div class="nav-right">
         <button class="toggle-btn lang-toggle" onclick="toggleLang()" title="Switch language" id="lang-btn">ES</button>
         <button class="toggle-btn" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">☀️</button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="/#spec" onclick="closeMenu()"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a>
+    <a href="https://agent.soulid.io" target="_blank" rel="noopener" onclick="closeMenu()"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a>
+    <a href="/registry" onclick="closeMenu()"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a>
+    <a href="/cli" onclick="closeMenu()">CLI</a>
+    <a href="/docs" onclick="closeMenu()"><span lang-key="en">Docs</span><span lang-key="es">Docs</span></a>
+    <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" onclick="closeMenu()">GitHub</a>
+  </div>
   <section id="registry">
     <div class="container">
       <div class="section-label"><span lang-key="en">Registry API</span><span lang-key="es">API del Registry</span></div>
@@ -1040,6 +1109,18 @@ acme:scout:v2:042</div>
       applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
       applyLang(savedLang || browserLang);
     })();
+  
+  function toggleMenu() {
+    const btn = document.getElementById('hamburger');
+    const drawer = document.getElementById('nav-drawer');
+    btn.classList.toggle('open');
+    drawer.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('nav-drawer').classList.remove('open');
+  }
+
   </script>
 </body>
 </html>
