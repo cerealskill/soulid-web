@@ -127,11 +127,11 @@
       height: 28px;
       width: auto;
       display: block;
-      filter: invert(1) brightness(2);
+      filter: none;
       transition: opacity 0.2s;
     }
     .nav-logo-img:hover { opacity: 0.8; }
-    [data-theme="light"] .nav-logo-img { filter: none; }
+    [data-theme="dark"] .nav-logo-img { filter: invert(1) brightness(2); }
 
 
     .nav-right {
@@ -898,7 +898,7 @@
   <!-- Nav -->
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-logo"><img src="https://agent.soulid.io/soulid-logo.png" alt="SOUL ID" class="nav-logo-img" /></a>
+      <a href="/" class="nav-logo"><img src="https://agent.soulid.io/soulid-logo.png" alt="SOUL ID" class="nav-logo-img" />soul<span>id</span>.io</a>
                         <ul class="nav-links">
         <li><a href="/#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
         <li><a href="https://agent.soulid.io" target="_blank" rel="noopener"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a></li>
