@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="SOUL ID — runtime-agnostic identity spec for autonomous AI agents." />
-  <title>SOUL ID — Identity for autonomous entities</title>
+  <title>SOUL ID — CLI</title>
   <style>
     :root {
       --bg: #07070f;
@@ -884,18 +884,14 @@
     html[lang="en"] [lang-flex="en"] { display: inline-flex; }
     html[lang="es"] [lang-flex="es"] { display: inline-flex; }
   </style>
-</head>
-<body>
-
-  <!-- Nav -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-logo">soul<span>id</span>.io</a>
+      <a href="/" class="nav-logo">soul<span>id</span>.io</a>
       <ul class="nav-links">
-        <li><a href="#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
+        <li><a href="/#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
         <li><a href="/docs.html"><span lang-key="en">Docs</span><span lang-key="es">Docs</span></a></li>
         <li><a href="/registry.html"><span lang-key="en">Registry API</span><span lang-key="es">API Registry</span></a></li>
-        <li><a href="/cli.html">CLI</a></li>
+        <li><a href="/cli.html" class="nav-active">CLI</a></li>
         <li><a href="https://agent.soulid.io" target="_blank" rel="noopener"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a></li>
         <li><a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener">GitHub</a></li>
       </ul>
@@ -905,237 +901,55 @@
       </div>
     </div>
   </nav>
-
-  <!-- Hero -->
-  <section class="hero">
+  <section id="cli">
     <div class="container">
-
-      <div class="hero-badge" lang-flex="en">Open Specification · v0.6</div>
-      <div class="hero-badge" lang-flex="es">Especificación Abierta · v0.6</div>
-
-      <h1>
-        <span lang-block="en">Identity for<br><em>autonomous entities.</em></span>
-        <span lang-block="es">Identidad para<br><em>entidades autónomas.</em></span>
-      </h1>
-
-      <p class="hero-sub" lang-block="en">
-        SOUL ID is a runtime-agnostic spec that defines how AI agents are identified, versioned, owned, and trusted across any runtime.
-      </p>
-      <p class="hero-sub" lang-block="es">
-        SOUL ID es una especificación agnóstica al runtime que define cómo los agentes de IA son identificados, versionados, con dueño y verificados en cualquier entorno de ejecución.
-      </p>
-
-      <div class="cta-group">
-        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-primary">
-          <span lang-key="en">Read the Spec</span><span lang-key="es">Leer la Especificación</span>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-secondary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 0C3.13 0 0 3.13 0 7c0 3.09 2.01 5.72 4.79 6.65.35.06.48-.15.48-.34v-1.2c-1.94.42-2.35-.94-2.35-.94-.32-.81-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.63.76 2.03.58.06-.45.24-.76.44-.93-1.55-.18-3.18-.78-3.18-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 017 3.58c.59 0 1.19.08 1.75.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7.001 7.001 0 0014 7c0-3.87-3.13-7-7-7z"/></svg>
-          GitHub
-        </a>
-      </div>
-
-      <!-- Code preview -->
-      <div class="code-preview">
-        <div class="code-preview-header">
-          <div class="dot dot-red"></div>
-          <div class="dot dot-yellow"></div>
-          <div class="dot dot-green"></div>
-          <span class="code-preview-label">soul.json</span>
-        </div>
-        <pre><span class="json-brace">{</span>
-  <span class="json-key">"soul_id"</span>: <span class="json-str">"soulid:custodian:v1:001"</span>,
-  <span class="json-key">"name"</span>: <span class="json-str">"Custodian"</span>,
-  <span class="json-key">"purpose"</span>: <span class="json-str">"Monitor and maintain system stability"</span>,
-  <span class="json-key">"owner"</span>: <span class="json-brace">{</span>
-    <span class="json-key">"id"</span>: <span class="json-str">"soulid"</span>,
-    <span class="json-key">"type"</span>: <span class="json-str">"organization"</span>
-  <span class="json-brace">}</span>
-<span class="json-brace">}</span></pre>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Problem -->
-  <section id="problem">
-    <div class="container">
-      <div class="section-label"><span lang-key="en">The Problem</span><span lang-key="es">El Problema</span></div>
+      <div class="section-label">CLI</div>
       <h2>
-        <span lang-block="en">Agents have no persistent identity</span>
-        <span lang-block="es">Los agentes no tienen identidad persistente</span>
+        <span lang-block="en">Use it from your terminal.</span>
+        <span lang-block="es">Úsalo desde tu terminal.</span>
       </h2>
-      <div class="problem-grid">
-        <div class="card">
-          <div class="card-icon">⬡</div>
-          <h3><span lang-key="en">Agents forget who they are</span><span lang-key="es">Los agentes olvidan quiénes son</span></h3>
-          <p>
-            <span lang-key="en">No persistent identity across runtimes or restarts. Every execution is a blank slate with no continuity.</span>
-            <span lang-key="es">Sin identidad persistente entre runtimes o reinicios. Cada ejecución empieza desde cero, sin continuidad.</span>
-          </p>
+      <div class="registry-intro">
+        <span lang-block="en">Install the official CLI to publish, resolve, and list souls directly from your shell.</span>
+        <span lang-block="es">Instala el CLI oficial para publicar, resolver y listar souls directamente desde tu terminal.</span>
+      </div>
+
+      <!-- Install -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get" style="background:#2d1f3d;color:#c4b5fd;">NPM</span>
+          <span class="api-path"><span lang-key="en">Install</span><span lang-key="es">Instalación</span></span>
         </div>
-        <div class="card">
-          <div class="card-icon">◈</div>
-          <h3><span lang-key="en">No standard ownership</span><span lang-key="es">Sin modelo de propiedad estándar</span></h3>
-          <p>
-            <span lang-key="en">Who controls an agent? Who vouches for it? There's no common layer for expressing provenance or trust.</span>
-            <span lang-key="es">¿Quién controla un agente? ¿Quién lo avala? No existe una capa común para expresar procedencia o confianza.</span>
-          </p>
-        </div>
-        <div class="card">
-          <div class="card-icon">◎</div>
-          <h3><span lang-key="en">Runtime lock-in</span><span lang-key="es">Dependencia del runtime</span></h3>
-          <p>
-            <span lang-key="en">Identity tied to a specific platform. An agent defined in OpenClaw can't be recognized in Claude Code or anywhere else.</span>
-            <span lang-key="es">Identidad atada a una plataforma específica. Un agente definido en OpenClaw no puede ser reconocido en Claude Code u otro entorno.</span>
-          </p>
+        <div class="api-block-body">
+          <div class="api-example">npm install -g @soulid/cli</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <div class="divider"></div>
-
-  <!-- What is -->
-  <section id="what">
-    <div class="container">
-      <div class="section-label"><span lang-key="en">What is SOUL ID</span><span lang-key="es">Qué es SOUL ID</span></div>
-      <h2>
-        <span lang-block="en">Identity separate from execution</span>
-        <span lang-block="es">Identidad separada de la ejecución</span>
-      </h2>
-      <div class="what-grid">
-        <div class="what-text">
-          <p lang-block="en">SOUL ID is a structured identity layer for autonomous entities. It defines who an agent is — not where it runs or what model it uses.</p>
-          <p lang-block="es">SOUL ID es una capa de identidad estructurada para entidades autónomas. Define quién es un agente, no dónde se ejecuta ni qué modelo usa.</p>
-
-          <p lang-block="en">A Soul Document is a portable JSON file that captures identity, purpose, values, capabilities, lineage, and ownership. It can be loaded into any compatible runtime.</p>
-          <p lang-block="es">Un Soul Document es un archivo JSON portable que captura identidad, propósito, valores, capacidades, linaje y propiedad. Puede cargarse en cualquier runtime compatible.</p>
-
-          <p lang-block="en">An agent defined once in SOUL ID format can be instantiated in OpenClaw, Claude Code, or any future runtime that implements the spec.</p>
-          <p lang-block="es">Un agente definido una vez en formato SOUL ID puede instanciarse en OpenClaw, Claude Code o cualquier runtime que implemente la especificación.</p>
+      <!-- Commands -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get" style="background:#2d1f3d;color:#c4b5fd;">CMD</span>
+          <span class="api-path"><span lang-key="en">Commands</span><span lang-key="es">Comandos</span></span>
         </div>
-        <div class="id-anatomy">
-          <div class="id-label-top">
-            <span lang-key="en">soul_id format</span>
-            <span lang-key="es">formato soul_id</span>
-          </div>
-          <div class="id-string">
-            <span class="ns">soulid</span><span class="sep"> : </span><span class="arc">custodian</span><span class="sep"> : </span><span class="ver">v1</span><span class="sep"> : </span><span class="ins">001</span>
-          </div>
-          <div class="id-labels">
-            <div class="id-label-item">
-              <div class="bar bar-ns"></div>
-              <span lang-key="en">namespace</span><span lang-key="es">namespace</span>
-            </div>
-            <div class="id-label-item">
-              <div class="bar bar-arc"></div>
-              <span lang-key="en">archetype</span><span lang-key="es">arquetipo</span>
-            </div>
-            <div class="id-label-item">
-              <div class="bar bar-ver"></div>
-              <span lang-key="en">version</span><span lang-key="es">versión</span>
-            </div>
-            <div class="id-label-item">
-              <div class="bar bar-ins"></div>
-              <span lang-key="en">instance</span><span lang-key="es">instancia</span>
-            </div>
-          </div>
+        <div class="api-block-body">
+          <div class="api-example-label"><span lang-key="en">Resolve a soul</span><span lang-key="es">Resolver un soul</span></div>
+          <div class="api-example">soulid resolve soulid:rasputina:v1:001</div>
+          <div class="api-example-label"><span lang-key="en">List registered souls</span><span lang-key="es">Listar souls registrados</span></div>
+          <div class="api-example">soulid list --archetype assistant</div>
+          <div class="api-example-label"><span lang-key="en">Publish a soul document</span><span lang-key="es">Publicar un Soul Document</span></div>
+          <div class="api-example">soulid publish ./my-agent.json</div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <div class="divider"></div>
-
-  <!-- Spec -->
-  <section id="spec">
-    <div class="container">
-      <div class="section-label"><span lang-key="en">The Spec</span><span lang-key="es">La Especificación</span></div>
-      <h2>
-        <span lang-block="en">Six layers. One complete stack.</span>
-        <span lang-block="es">Seis capas. Un stack completo.</span>
-      </h2>
-      <div class="spec-grid">
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.1.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0001 · v0.1</div>
-          <div class="spec-title"><span lang-key="en">Identity</span><span lang-key="es">Identidad</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">soul_id format, Soul Document structure, lineage model, lifecycle.</span>
-            <span lang-key="es">Formato soul_id, estructura del Soul Document, modelo de linaje y ciclo de vida.</span>
-          </div>
-        </a>
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.2.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0002 · v0.2</div>
-          <div class="spec-title"><span lang-key="en">Trust</span><span lang-key="es">Confianza</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">Ownership model, cryptographic signatures, trust levels and verification.</span>
-            <span lang-key="es">Modelo de propiedad, firmas criptográficas, niveles y verificación de confianza.</span>
-          </div>
-        </a>
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.3.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0003 · v0.3</div>
-          <div class="spec-title"><span lang-key="en">Interoperability</span><span lang-key="es">Interoperabilidad</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">Runtime adapter interface. Reference adapters for OpenClaw and Claude Code.</span>
-            <span lang-key="es">Interfaz de adaptadores. Adaptadores de referencia para OpenClaw y Claude Code.</span>
-          </div>
-        </a>
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.4.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0004 · v0.4</div>
-          <div class="spec-title"><span lang-key="en">Registry</span><span lang-key="es">Registro</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">DNS-like resolution protocol. Publish, discover, and resolve Soul Documents.</span>
-            <span lang-key="es">Protocolo de resolución tipo DNS. Publica, descubre y resuelve Soul Documents.</span>
-          </div>
-        </a>
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.5.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0005 · v0.5</div>
-          <div class="spec-title"><span lang-key="en">Ecosystem</span><span lang-key="es">Ecosistema</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">soul CLI, @soulid/core SDK, adapter packages, extension model.</span>
-            <span lang-key="es">soul CLI, SDK @soulid/core, paquetes de adaptadores y modelo de extensiones.</span>
-          </div>
-        </a>
-        <a href="https://github.com/soulid-spec/spec/blob/main/spec/v0.6.md" target="_blank" rel="noopener" class="spec-card">
-          <div class="spec-version">RFC-0006 · v0.6</div>
-          <div class="spec-title"><span lang-key="en">Decentralization</span><span lang-key="es">Descentralización</span></div>
-          <div class="spec-desc">
-            <span lang-key="en">IPFS storage, did:soul method, on-chain anchoring. Full sovereignty.</span>
-            <span lang-key="es">Almacenamiento IPFS, método did:soul, anclaje on-chain. Soberanía total.</span>
-          </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a href="https://www.npmjs.com/package/@soulid/cli" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M0 0h14v14H0V0zm1.5 1.5v11h5.25V5.25h2.625V12.5H12.5v-11H1.5z"/></svg>
+          @soulid/cli on npm
         </a>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
-
-  <!-- Footer CTA -->
-  <section class="footer-cta">
-    <div class="container">
-      <div class="section-label"><span lang-key="en">Open Specification</span><span lang-key="es">Especificación Abierta</span></div>
-      <h2>
-        <span lang-block="en">The spec is open.<br>Start here.</span>
-        <span lang-block="es">La especificación es abierta.<br>Empieza aquí.</span>
-      </h2>
-      <p><span lang-key="en">MIT License · contributions welcome</span><span lang-key="es">Licencia MIT · contribuciones bienvenidas</span></p>
-      <div class="cta-group">
-        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-primary">
-          <span lang-key="en">Read the Spec</span><span lang-key="es">Leer la Especificación</span>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener" class="btn btn-secondary">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 0C3.13 0 0 3.13 0 7c0 3.09 2.01 5.72 4.79 6.65.35.06.48-.15.48-.34v-1.2c-1.94.42-2.35-.94-2.35-.94-.32-.81-.78-1.02-.78-1.02-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.63.76 2.03.58.06-.45.24-.76.44-.93-1.55-.18-3.18-.78-3.18-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 017 3.58c.59 0 1.19.08 1.75.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7.001 7.001 0 0014 7c0-3.87-3.13-7-7-7z"/></svg>
-          GitHub
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer>
     <div class="footer-inner">
       <span class="footer-logo">soul<span>id</span>.io</span>
@@ -1146,48 +960,22 @@
       </ul>
     </div>
   </footer>
-
   <script>
-    // ── Theme ──
     const root = document.documentElement;
-    const themeBtn = document.getElementById('theme-btn');
-
-    function applyTheme(t) {
-      root.setAttribute('data-theme', t);
-      themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
-      localStorage.setItem('soulid-theme', t);
-    }
-
-    function toggleTheme() {
-      applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    }
-
-    // ── Lang ──
-    const langBtn = document.getElementById('lang-btn');
-
-    function applyLang(l) {
-      root.setAttribute('lang', l);
-      langBtn.textContent = l === 'en' ? 'ES' : 'EN';
-      document.documentElement.lang = l;
-      localStorage.setItem('soulid-lang', l);
-    }
-
-    function toggleLang() {
-      applyLang(root.getAttribute('lang') === 'en' ? 'es' : 'en');
-    }
-
-    // ── Init: detect browser preferences ──
+    const themeBtn = document.getElementById("theme-btn");
+    const langBtn = document.getElementById("lang-btn");
+    function applyTheme(t) { root.setAttribute("data-theme", t); themeBtn.textContent = t === "dark" ? "☀️" : "🌙"; localStorage.setItem("soulid-theme", t); }
+    function toggleTheme() { applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark"); }
+    function applyLang(l) { root.setAttribute("lang", l); langBtn.textContent = l === "en" ? "ES" : "EN"; document.documentElement.lang = l; localStorage.setItem("soulid-lang", l); }
+    function toggleLang() { applyLang(root.getAttribute("lang") === "en" ? "es" : "en"); }
     (function init() {
-      const savedTheme = localStorage.getItem('soulid-theme');
-      const savedLang  = localStorage.getItem('soulid-lang');
-
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const browserLang = (navigator.language || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
-
-      applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+      const savedTheme = localStorage.getItem("soulid-theme");
+      const savedLang  = localStorage.getItem("soulid-lang");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const browserLang = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
+      applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
       applyLang(savedLang || browserLang);
     })();
-
   </script>
 </body>
 </html>
