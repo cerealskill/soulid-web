@@ -530,6 +530,118 @@
       line-height: 1.5;
     }
 
+    /* Registry / API Docs */
+    .registry-intro {
+      max-width: 640px;
+      margin: 0 auto 56px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .api-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .api-block-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .api-method {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .method-get { background: #0d3321; color: #34d399; }
+    .method-post { background: #1e2a45; color: #60a5fa; }
+    [data-theme="light"] .method-get { background: #d1fae5; color: #065f46; }
+    [data-theme="light"] .method-post { background: #dbeafe; color: #1d4ed8; }
+
+    .api-path {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    [data-theme="dark"] .api-path { color: #e2e8f0; }
+    [data-theme="light"] .api-path { color: #1e1b4b; }
+
+    .api-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .api-block-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .api-example {
+      background: var(--bg-base);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      border: 1px solid var(--border-subtle);
+    }
+
+    [data-theme="dark"] .api-example { color: #a5b4fc; }
+    [data-theme="light"] .api-example { color: #4338ca; }
+
+    .api-example-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+
+    .api-base-url {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      margin-bottom: 40px;
+    }
+
+    [data-theme="dark"] .api-base-url { color: #c4b5fd; }
+    [data-theme="light"] .api-base-url { color: #6d28d9; }
+
+    .api-base-dot {
+      width: 7px;
+      height: 7px;
+      background: #34d399;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
     /* Footer CTA */
     .footer-cta {
       text-align: center;
@@ -617,6 +729,7 @@
       <ul class="nav-links">
         <li><a href="#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
         <li><a href="#what"><span lang-key="en">What is SOUL ID</span><span lang-key="es">Qué es SOUL ID</span></a></li>
+        <li><a href="#registry"><span lang-key="en">Registry API</span><span lang-key="es">API Registry</span></a></li>
         <li><a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener">GitHub</a></li>
       </ul>
       <div class="nav-right">
@@ -828,6 +941,102 @@
           </div>
         </a>
       </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Registry API Docs -->
+  <section id="registry">
+    <div class="container">
+      <div class="section-label"><span lang-key="en">Registry API</span><span lang-key="es">API del Registry</span></div>
+      <h2>
+        <span lang-block="en">Publish. Resolve. Verify.</span>
+        <span lang-block="es">Publica. Resuelve. Verifica.</span>
+      </h2>
+      <div class="registry-intro">
+        <span lang-block="en">The SOUL ID Registry is a lightweight REST API that provides DNS-like resolution for soul identifiers. Any agent can be published and resolved across runtimes.</span>
+        <span lang-block="es">El Registry de SOUL ID es una API REST liviana que provee resolución tipo DNS para identificadores de agentes. Cualquier agente puede publicarse y resolverse en cualquier runtime.</span>
+      </div>
+
+      <div style="text-align:center;">
+        <div class="api-base-url" style="display:inline-flex;">
+          <span class="api-base-dot"></span>
+          <span>https://registry.soulid.io</span>
+        </div>
+      </div>
+
+      <!-- GET /health -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get">GET</span>
+          <span class="api-path">/health</span>
+          <span class="api-desc"><span lang-key="en">Service status</span><span lang-key="es">Estado del servicio</span></span>
+        </div>
+        <div class="api-block-body">
+          <div class="api-example-label">Response</div>
+          <div class="api-example">{ "status": "ok", "service": "soulid-registry", "version": "0.1.0" }</div>
+        </div>
+      </div>
+
+      <!-- GET /resolve -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get">GET</span>
+          <span class="api-path">/resolve/:soul_id</span>
+          <span class="api-desc"><span lang-key="en">Resolve a soul identifier</span><span lang-key="es">Resolver un identificador de agente</span></span>
+        </div>
+        <div class="api-block-body">
+          <div class="api-example-label">Request</div>
+          <div class="api-example">GET /resolve/soulid:rasputina:v1:001</div>
+          <div class="api-example-label">Response</div>
+          <div class="api-example">{
+  "soul_id": "soulid:rasputina:v1:001",
+  "name": "Rasputina",
+  "archetype": "assistant",
+  "purpose": "Personal AI assistant — hacker mística, gótica sabia",
+  "owner": { "id": "cerealskill", "type": "person" }
+}</div>
+        </div>
+      </div>
+
+      <!-- POST /publish -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-post">POST</span>
+          <span class="api-path">/publish</span>
+          <span class="api-desc"><span lang-key="en">Register a soul document</span><span lang-key="es">Registrar un Soul Document</span></span>
+        </div>
+        <div class="api-block-body">
+          <div class="api-example-label">Request</div>
+          <div class="api-example">POST /publish
+Authorization: Bearer &lt;api_key&gt;
+Content-Type: application/json
+
+{
+  "soul_id": "soulid:scout:v1:007",
+  "name": "Scout",
+  "archetype": "researcher",
+  "purpose": "Web research and data gathering agent",
+  "values": ["accuracy", "speed", "transparency"],
+  "capabilities": ["search", "scrape", "summarize"],
+  "owner": { "id": "yourhandle", "type": "person" }
+}</div>
+          <div class="api-example-label">Response</div>
+          <div class="api-example">{ "ok": true, "soul_id": "soulid:scout:v1:007" }</div>
+        </div>
+      </div>
+
+      <!-- Soul ID format -->
+      <div style="margin-top:48px; text-align:center;">
+        <div class="section-label" style="margin-bottom:16px;"><span lang-key="en">Soul ID Format</span><span lang-key="es">Formato del Soul ID</span></div>
+        <div class="api-example" style="display:inline-block; text-align:left; padding:20px 28px;">namespace:archetype:version:instance
+
+soulid:custodian:v1:001
+soulid:rasputina:v1:001
+acme:scout:v2:042</div>
+      </div>
+
     </div>
   </section>
 
