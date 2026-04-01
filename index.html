@@ -530,6 +530,170 @@
       line-height: 1.5;
     }
 
+    /* Docs Section */
+    .docs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .docs-nav-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: var(--text-muted);
+    }
+
+    .docs-nav-btn:hover,
+    .docs-nav-btn.active {
+      border-color: var(--purple-light);
+      color: var(--purple-light);
+      background: rgba(139, 92, 246, 0.08);
+    }
+
+    .docs-rfc {
+      display: none;
+    }
+
+    .docs-rfc.active {
+      display: block;
+    }
+
+    .docs-rfc-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .docs-rfc-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 5px;
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--purple-light);
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    .docs-rfc-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    [data-theme="dark"] .docs-rfc-title { color: #fff; }
+    [data-theme="light"] .docs-rfc-title { color: #1e1b4b; }
+
+    .docs-rfc-abstract {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 680px;
+    }
+
+    .docs-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin: 32px 0 16px;
+    }
+
+    .docs-p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .docs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .docs-table th {
+      text-align: left;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .docs-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+
+    [data-theme="dark"] .docs-table td { color: #cbd5e1; }
+    [data-theme="light"] .docs-table td { color: #374151; }
+
+    .docs-table td:first-child {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--purple-light);
+      white-space: nowrap;
+    }
+
+    .docs-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .docs-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+    }
+
+    .docs-lifecycle {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+
+    .docs-lifecycle-step {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 4px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      color: var(--purple-light);
+    }
+
+    .docs-lifecycle-arrow {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
     /* Registry / API Docs */
     .registry-intro {
       max-width: 640px;
@@ -728,6 +892,7 @@
       <a href="#" class="nav-logo">soul<span>id</span>.io</a>
       <ul class="nav-links">
         <li><a href="#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
+        <li><a href="#docs"><span lang-key="en">Docs</span><span lang-key="es">Docs</span></a></li>
         <li><a href="#what"><span lang-key="en">What is SOUL ID</span><span lang-key="es">Qué es SOUL ID</span></a></li>
         <li><a href="#registry"><span lang-key="en">Registry API</span><span lang-key="es">API Registry</span></a></li>
         <li><a href="#cli">CLI</a></li>
@@ -942,6 +1107,277 @@
           </div>
         </a>
       </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Docs -->
+  <section id="docs">
+    <div class="container">
+      <div class="section-label"><span lang-key="en">Documentation</span><span lang-key="es">Documentación</span></div>
+      <h2>
+        <span lang-block="en">The full spec, explained.</span>
+        <span lang-block="es">La especificación completa, explicada.</span>
+      </h2>
+
+      <!-- RFC Nav -->
+      <div class="docs-nav">
+        <button class="docs-nav-btn active" onclick="showRFC('rfc1')">RFC-0001 · Identity</button>
+        <button class="docs-nav-btn" onclick="showRFC('rfc2')">RFC-0002 · Trust</button>
+        <button class="docs-nav-btn" onclick="showRFC('rfc3')">RFC-0003 · Adapters</button>
+        <button class="docs-nav-btn" onclick="showRFC('rfc4')">RFC-0004 · Registry</button>
+        <button class="docs-nav-btn" onclick="showRFC('rfc5')">RFC-0005 · Ecosystem</button>
+        <button class="docs-nav-btn" onclick="showRFC('rfc6')">RFC-0006 · Decentralization</button>
+      </div>
+
+      <!-- RFC-0001 Identity -->
+      <div class="docs-rfc active" id="rfc1">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0001 · v0.1</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Identity Layer</span><span lang-key="es">Capa de Identidad</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Defines the canonical identifier format and Soul Document structure that enable persistent, runtime-agnostic identity for autonomous agents.</span>
+              <span lang-block="es">Define el formato de identificador canónico y la estructura del Soul Document para una identidad persistente y agnóstica al runtime.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Soul ID Format</span><span lang-key="es">Formato Soul ID</span></div>
+        <div class="api-example" style="margin-bottom:16px;">namespace:archetype:version:instance
+
+soulid:custodian:v1:001
+soulid:rasputina:v1:001
+acme:scout:v2:042</div>
+
+        <div class="docs-section-title"><span lang-key="en">Soul Document Fields</span><span lang-key="es">Campos del Soul Document</span></div>
+        <table class="docs-table">
+          <thead><tr><th><span lang-key="en">Field</span><span lang-key="es">Campo</span></th><th><span lang-key="en">Type</span><span lang-key="es">Tipo</span></th><th><span lang-key="en">Description</span><span lang-key="es">Descripción</span></th></tr></thead>
+          <tbody>
+            <tr><td>soul_id</td><td>string</td><td><span lang-key="en">Canonical identifier (MUST, immutable)</span><span lang-key="es">Identificador canónico (obligatorio, inmutable)</span></td></tr>
+            <tr><td>name</td><td>string</td><td><span lang-key="en">Human-readable name</span><span lang-key="es">Nombre legible</span></td></tr>
+            <tr><td>archetype</td><td>string</td><td><span lang-key="en">Entity role/type</span><span lang-key="es">Rol o tipo de entidad</span></td></tr>
+            <tr><td>purpose</td><td>string</td><td><span lang-key="en">What this entity does</span><span lang-key="es">Para qué sirve esta entidad</span></td></tr>
+            <tr><td>values</td><td>string[]</td><td><span lang-key="en">Behavioral values</span><span lang-key="es">Valores de comportamiento</span></td></tr>
+            <tr><td>capabilities</td><td>string[]</td><td><span lang-key="en">Available tools/abilities</span><span lang-key="es">Herramientas y habilidades disponibles</span></td></tr>
+            <tr><td>memory</td><td>object</td><td><span lang-key="en">Memory type and scope</span><span lang-key="es">Tipo y alcance de la memoria</span></td></tr>
+            <tr><td>lineage</td><td>object</td><td><span lang-key="en">Origin, parent, forked_from</span><span lang-key="es">Origen, padre, bifurcación</span></td></tr>
+            <tr><td>runtime_hints</td><td>object</td><td><span lang-key="en">Preferred runtimes and adapters</span><span lang-key="es">Runtimes preferidos y adaptadores</span></td></tr>
+            <tr><td>owner</td><td>object</td><td><span lang-key="en">Owner identity (v0.2+)</span><span lang-key="es">Identidad del dueño (v0.2+)</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="docs-section-title"><span lang-key="en">Lifecycle</span><span lang-key="es">Ciclo de Vida</span></div>
+        <div class="docs-lifecycle">
+          <span class="docs-lifecycle-step">define</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">instantiate</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">execute</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">evolve</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">version</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">fork</span><span class="docs-lifecycle-arrow">→</span>
+          <span class="docs-lifecycle-step">migrate</span>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Design Principles</span><span lang-key="es">Principios de Diseño</span></div>
+        <div class="docs-pills">
+          <span class="docs-pill"><span lang-key="en">Identity Persistence</span><span lang-key="es">Persistencia de Identidad</span></span>
+          <span class="docs-pill"><span lang-key="en">Runtime Independence</span><span lang-key="es">Independencia del Runtime</span></span>
+          <span class="docs-pill"><span lang-key="en">Portability</span><span lang-key="es">Portabilidad</span></span>
+          <span class="docs-pill"><span lang-key="en">Evolvability</span><span lang-key="es">Evolución</span></span>
+        </div>
+      </div>
+
+      <!-- RFC-0002 Trust -->
+      <div class="docs-rfc" id="rfc2">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0002 · v0.2</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Ownership, Signatures & Trust</span><span lang-key="es">Propiedad, Firmas y Confianza</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Introduces ownership, cryptographic signatures, and a trust layer that enables verifiable identity and provenance between entities and runtimes.</span>
+              <span lang-block="es">Introduce propiedad, firmas criptográficas y una capa de confianza para identidad verificable entre entidades y runtimes.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Owner Field</span><span lang-key="es">Campo Owner</span></div>
+        <div class="api-example" style="margin-bottom:16px;">{
+  "owner": {
+    "id": "cerealskill",
+    "type": "person"
+  }
+}</div>
+
+        <div class="docs-section-title"><span lang-key="en">Trust Levels</span><span lang-key="es">Niveles de Confianza</span></div>
+        <table class="docs-table">
+          <thead><tr><th><span lang-key="en">Level</span><span lang-key="es">Nivel</span></th><th><span lang-key="en">Meaning</span><span lang-key="es">Significado</span></th></tr></thead>
+          <tbody>
+            <tr><td>unknown</td><td><span lang-key="en">No signature, not verified</span><span lang-key="es">Sin firma, no verificado</span></td></tr>
+            <tr><td>self-signed</td><td><span lang-key="en">Signed by owner, not externally verified</span><span lang-key="es">Firmado por el dueño, no verificado externamente</span></td></tr>
+            <tr><td>verified</td><td><span lang-key="en">Signature verified by registry</span><span lang-key="es">Firma verificada por el registry</span></td></tr>
+            <tr><td>trusted</td><td><span lang-key="en">Verified + established reputation</span><span lang-key="es">Verificado + reputación establecida</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="docs-section-title"><span lang-key="en">Signature</span><span lang-key="es">Firma</span></div>
+        <div class="api-example">{
+  "signature": {
+    "algorithm": "Ed25519",
+    "value": "base64url...",
+    "signed_at": "2026-03-31T00:00:00Z"
+  }
+}</div>
+      </div>
+
+      <!-- RFC-0003 Adapters -->
+      <div class="docs-rfc" id="rfc3">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0003 · v0.3</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Runtime Adapters</span><span lang-key="es">Adaptadores de Runtime</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Defines how specific execution environments instantiate, bind, and persist a Soul Document. Reference implementations for OpenClaw and Claude Code.</span>
+              <span lang-block="es">Define cómo los entornos de ejecución instancian, vinculan y persisten un Soul Document. Implementaciones de referencia para OpenClaw y Claude Code.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Adapter Interface</span><span lang-key="es">Interfaz del Adaptador</span></div>
+        <table class="docs-table">
+          <thead><tr><th><span lang-key="en">Field</span><span lang-key="es">Campo</span></th><th><span lang-key="en">Description</span><span lang-key="es">Descripción</span></th></tr></thead>
+          <tbody>
+            <tr><td>runtime</td><td><span lang-key="en">Runtime identifier</span><span lang-key="es">Identificador del runtime</span></td></tr>
+            <tr><td>workspace</td><td><span lang-key="en">Canonical workspace path</span><span lang-key="es">Ruta del workspace canónico</span></td></tr>
+            <tr><td>identity_binding</td><td><span lang-key="en">How soul fields map to runtime constructs</span><span lang-key="es">Cómo los campos del soul se mapean al runtime</span></td></tr>
+            <tr><td>memory_binding</td><td><span lang-key="en">How memory is persisted and retrieved</span><span lang-key="es">Cómo se persiste y recupera la memoria</span></td></tr>
+            <tr><td>capability_binding</td><td><span lang-key="en">How capabilities map to tools</span><span lang-key="es">Cómo las capacidades se mapean a herramientas</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="docs-section-title"><span lang-key="en">Reference Runtimes</span><span lang-key="es">Runtimes de Referencia</span></div>
+        <div class="docs-pills">
+          <span class="docs-pill">OpenClaw → SOUL.md + IDENTITY.md + MEMORY.md</span>
+          <span class="docs-pill">Claude Code → CLAUDE.md + .memory/ topics</span>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Memory Strategy: pointer-index</span><span lang-key="es">Estrategia de Memoria: pointer-index</span></div>
+        <div class="docs-p">
+          <span lang-block="en">MEMORY.md acts as a lightweight pointer index (~150 chars/line). Topic-specific detail lives in separate files. Full transcripts are never reloaded — only searched for specific identifiers.</span>
+          <span lang-block="es">MEMORY.md actúa como un índice liviano de punteros (~150 chars/línea). El detalle por tema vive en archivos separados. Las transcripciones completas nunca se recargan, solo se buscan por identificadores.</span>
+        </div>
+      </div>
+
+      <!-- RFC-0004 Registry -->
+      <div class="docs-rfc" id="rfc4">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0004 · v0.4</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Defines the DNS-like resolution protocol for soul identifiers. Any compliant host can implement a Registry to publish, discover, and resolve Soul Documents.</span>
+              <span lang-block="es">Define el protocolo de resolución tipo DNS para soul identifiers. Cualquier host compatible puede implementar un Registry para publicar, descubrir y resolver Soul Documents.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Registry Scope</span><span lang-key="es">Alcance del Registry</span></div>
+        <div class="docs-pills">
+          <span class="docs-pill"><span lang-key="en">Public — open namespaces</span><span lang-key="es">Público — namespaces abiertos</span></span>
+          <span class="docs-pill"><span lang-key="en">Private — restricted access</span><span lang-key="es">Privado — acceso restringido</span></span>
+          <span class="docs-pill"><span lang-key="en">Namespace-scoped</span><span lang-key="es">Con alcance por namespace</span></span>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Resolution Protocol</span><span lang-key="es">Protocolo de Resolución</span></div>
+        <div class="api-example">GET https://registry.soulid.io/resolve/soulid:rasputina:v1:001
+
+{
+  "soul_id": "soulid:rasputina:v1:001",
+  "name": "Rasputina",
+  "archetype": "assistant",
+  "purpose": "Personal AI assistant — hacker mística, gótica sabia",
+  "owner": { "id": "cerealskill", "type": "person" }
+}</div>
+
+        <div class="docs-section-title"><span lang-key="en">Namespace DNS Mapping</span><span lang-key="es">Mapeo DNS por Namespace</span></div>
+        <div class="api-example">_soulid.yourdomain.com  TXT  "registry=https://registry.yourdomain.com"</div>
+      </div>
+
+      <!-- RFC-0005 Ecosystem -->
+      <div class="docs-rfc" id="rfc5">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0005 · v0.5</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Ecosystem & SDK</span><span lang-key="es">Ecosistema y SDK</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Defines the tooling, SDK contracts, and extension points that enable third parties to build on SOUL ID. Specifies the CLI, Runtime Adapter SDK, and extension model.</span>
+              <span lang-block="es">Define el tooling, contratos del SDK y puntos de extensión para que terceros construyan sobre SOUL ID. Especifica el CLI, SDK de adaptadores y modelo de extensiones.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">SDK Packages</span><span lang-key="es">Paquetes del SDK</span></div>
+        <table class="docs-table">
+          <thead><tr><th><span lang-key="en">Package</span><span lang-key="es">Paquete</span></th><th><span lang-key="en">Description</span><span lang-key="es">Descripción</span></th></tr></thead>
+          <tbody>
+            <tr><td>@soulid/core</td><td><span lang-key="en">Core types, validation, Soul Document parsing</span><span lang-key="es">Tipos base, validación y parsing del Soul Document</span></td></tr>
+            <tr><td>@soulid/cli</td><td><span lang-key="en">Official CLI — publish, resolve, list</span><span lang-key="es">CLI oficial — publicar, resolver, listar</span></td></tr>
+            <tr><td>@soulid/adapter-openclaw</td><td><span lang-key="en">OpenClaw runtime adapter</span><span lang-key="es">Adaptador para runtime OpenClaw</span></td></tr>
+            <tr><td>@soulid/adapter-claude-code</td><td><span lang-key="en">Claude Code runtime adapter</span><span lang-key="es">Adaptador para runtime Claude Code</span></td></tr>
+            <tr><td>@soulid/registry-client</td><td><span lang-key="en">Registry API client</span><span lang-key="es">Cliente de la API del Registry</span></td></tr>
+            <tr><td>@soulid/crypto</td><td><span lang-key="en">Signing and verification utilities</span><span lang-key="es">Utilidades de firma y verificación</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="docs-section-title"><span lang-key="en">Extension Points</span><span lang-key="es">Puntos de Extensión</span></div>
+        <div class="docs-pills">
+          <span class="docs-pill"><span lang-key="en">Memory Backends (file, git, s3)</span><span lang-key="es">Backends de Memoria (file, git, s3)</span></span>
+          <span class="docs-pill"><span lang-key="en">Registry Backends (http, local, ipfs)</span><span lang-key="es">Backends de Registry (http, local, ipfs)</span></span>
+          <span class="docs-pill"><span lang-key="en">Capability Providers</span><span lang-key="es">Proveedores de Capacidades</span></span>
+        </div>
+      </div>
+
+      <!-- RFC-0006 Decentralization -->
+      <div class="docs-rfc" id="rfc6">
+        <div class="docs-rfc-header">
+          <span class="docs-rfc-badge">RFC-0006 · v0.6</span>
+          <div>
+            <div class="docs-rfc-title"><span lang-key="en">Decentralization</span><span lang-key="es">Descentralización</span></div>
+            <div class="docs-rfc-abstract">
+              <span lang-block="en">Optional protocols for sovereign identity: IPFS content-addressed storage, W3C DID compatibility, and on-chain anchoring for immutable lineage proofs.</span>
+              <span lang-block="es">Protocolos opcionales para identidad soberana: almacenamiento IPFS, compatibilidad con W3C DID y anclaje on-chain para pruebas de linaje inmutables.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="docs-section-title"><span lang-key="en">Three Tracks (all optional)</span><span lang-key="es">Tres Tracks (todos opcionales)</span></div>
+        <table class="docs-table">
+          <thead><tr><th>Track</th><th><span lang-key="en">What it provides</span><span lang-key="es">Qué provee</span></th></tr></thead>
+          <tbody>
+            <tr><td>A · IPFS</td><td><span lang-key="en">Content-addressed, censorship-resistant storage</span><span lang-key="es">Almacenamiento resistente a censura, direccionado por contenido</span></td></tr>
+            <tr><td>B · DID</td><td><span lang-key="en">W3C standards compatibility, did:soul method</span><span lang-key="es">Compatibilidad W3C, método did:soul</span></td></tr>
+            <tr><td>C · On-chain</td><td><span lang-key="en">Immutable timestamp + lineage proof on Base/Ethereum</span><span lang-key="es">Timestamp inmutable + prueba de linaje en Base/Ethereum</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="docs-section-title"><span lang-key="en">The Complete Stack</span><span lang-key="es">El Stack Completo</span></div>
+        <div class="api-example">v0.1 → Who am I?
+v0.2 → Who vouches for me?
+v0.3 → How do you run me?
+v0.4 → Where do you find me?
+v0.5 → How do you use me?
+v0.6 → Who controls me?  →  Nobody but my owner.</div>
+
+        <div class="docs-section-title"><span lang-key="en">DID Method</span><span lang-key="es">Método DID</span></div>
+        <div class="api-example">did:soul:soulid:rasputina:v1:001</div>
+
+        <div class="docs-section-title"><span lang-key="en">On-chain Anchoring</span><span lang-key="es">Anclaje On-chain</span></div>
+        <div class="docs-p">
+          <span lang-block="en">Hash commitments anchored to Base (default), Ethereum, Polygon, or Arbitrum. The document stays off-chain; only the hash is stored on-chain.</span>
+          <span lang-block="es">Compromisos de hash anclados en Base (default), Ethereum, Polygon o Arbitrum. El documento permanece off-chain; solo el hash se almacena en la blockchain.</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1168,6 +1604,14 @@ acme:scout:v2:042</div>
       applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
       applyLang(savedLang || browserLang);
     })();
+
+    // ── Docs RFC tabs ──
+    function showRFC(id) {
+      document.querySelectorAll('.docs-rfc').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.docs-nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
   </script>
 </body>
 </html>
