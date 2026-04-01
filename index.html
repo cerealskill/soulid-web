@@ -730,6 +730,7 @@
         <li><a href="#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
         <li><a href="#what"><span lang-key="en">What is SOUL ID</span><span lang-key="es">Qué es SOUL ID</span></a></li>
         <li><a href="#registry"><span lang-key="en">Registry API</span><span lang-key="es">API Registry</span></a></li>
+        <li><a href="#cli">CLI</a></li>
         <li><a href="https://github.com/soulid-spec/spec" target="_blank" rel="noopener">GitHub</a></li>
       </ul>
       <div class="nav-right">
@@ -1037,6 +1038,57 @@ soulid:rasputina:v1:001
 acme:scout:v2:042</div>
       </div>
 
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CLI -->
+  <section id="cli">
+    <div class="container">
+      <div class="section-label">CLI</div>
+      <h2>
+        <span lang-block="en">Use it from your terminal.</span>
+        <span lang-block="es">Úsalo desde tu terminal.</span>
+      </h2>
+      <div class="registry-intro">
+        <span lang-block="en">Install the official CLI to publish, resolve, and list souls directly from your shell.</span>
+        <span lang-block="es">Instala el CLI oficial para publicar, resolver y listar souls directamente desde tu terminal.</span>
+      </div>
+
+      <!-- Install -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get" style="background:#2d1f3d;color:#c4b5fd;">NPM</span>
+          <span class="api-path"><span lang-key="en">Install</span><span lang-key="es">Instalación</span></span>
+        </div>
+        <div class="api-block-body">
+          <div class="api-example">npm install -g @soulid/cli</div>
+        </div>
+      </div>
+
+      <!-- Commands -->
+      <div class="api-block">
+        <div class="api-block-header">
+          <span class="api-method method-get" style="background:#2d1f3d;color:#c4b5fd;">CMD</span>
+          <span class="api-path"><span lang-key="en">Commands</span><span lang-key="es">Comandos</span></span>
+        </div>
+        <div class="api-block-body">
+          <div class="api-example-label"><span lang-key="en">Resolve a soul</span><span lang-key="es">Resolver un soul</span></div>
+          <div class="api-example">soulid resolve soulid:rasputina:v1:001</div>
+          <div class="api-example-label"><span lang-key="en">List registered souls</span><span lang-key="es">Listar souls registrados</span></div>
+          <div class="api-example">soulid list --archetype assistant</div>
+          <div class="api-example-label"><span lang-key="en">Publish a soul document</span><span lang-key="es">Publicar un Soul Document</span></div>
+          <div class="api-example">soulid publish ./my-agent.json</div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:40px;">
+        <a href="https://www.npmjs.com/package/@soulid/cli" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M0 0h14v14H0V0zm1.5 1.5v11h5.25V5.25h2.625V12.5H12.5v-11H1.5z"/></svg>
+          @soulid/cli on npm
+        </a>
+      </div>
     </div>
   </section>
 
