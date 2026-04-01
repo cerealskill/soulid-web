@@ -197,6 +197,14 @@
     }
 
     /* ── Hero ── */
+    .hero-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      object-fit: cover;
+      margin: 0 auto 24px;
+      display: block;
+    }
     .hero {
       padding: 160px 0 100px;
       text-align: center;
@@ -883,7 +891,15 @@
     .divider { height: 1px; background: var(--border-subtle); margin: 0; }
 
     @media (max-width: 600px) {
-      .hero { padding: 120px 0 80px; }
+      .hero-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      object-fit: cover;
+      margin: 0 auto 24px;
+      display: block;
+    }
+    .hero { padding: 120px 0 80px; }
       section { padding: 64px 0; }
       .nav-links { display: none; }
     }
@@ -928,6 +944,8 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
+
+      <img src="https://agent.soulid.io/soulid-logo.png" alt="SOUL ID" class="hero-logo" />
 
       <div class="hero-badge" lang-flex="en">Open Specification · v0.6</div>
       <div class="hero-badge" lang-flex="es">Especificación Abierta · v0.6</div>
