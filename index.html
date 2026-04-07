@@ -835,6 +835,122 @@
       50% { opacity: 0.4; }
     }
 
+    /* Live Registry Widget */
+    #registry-live {
+      padding: 96px 0;
+    }
+    #registry-live h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 560px;
+      margin: 0 auto 48px;
+    }
+    .registry-stats {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px 36px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--purple-light);
+      line-height: 1;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    .souls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .soul-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .soul-card:hover {
+      border-color: var(--purple);
+      transform: translateY(-2px);
+    }
+    .soul-id-badge {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: var(--cyan);
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+      display: inline-block;
+      word-break: break-all;
+    }
+    .soul-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .soul-archetype {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .souls-loading {
+      grid-column: 1/-1;
+      text-align: center;
+      color: var(--text-muted);
+      padding: 48px;
+    }
+    .registry-cta {
+      text-align: center;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) {
+      .registry-stats { flex-direction: column; align-items: center; }
+      .souls-grid { grid-template-columns: 1fr; }
+    }
+
     /* Footer CTA */
     .footer-cta {
       text-align: center;
@@ -987,6 +1103,7 @@
       <a href="/" class="nav-logo"><img src="https://agent.soulid.io/soulid-logo.png" alt="SOUL ID" class="nav-logo-img"><span class="nav-logo-text">soul<span class="nav-accent">id</span>.io</span></a>
       <ul class="nav-links">
         <li><a href="/#spec"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a></li>
+        <li><a href="/#registry-live"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a></li>
         <li><a href="https://agent.soulid.io" target="_blank" rel="noopener"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a></li>
         <li><a href="/registry"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a></li>
         <li><a href="/cli">CLI</a></li>
@@ -1005,6 +1122,7 @@
   <!-- Mobile drawer -->
   <div class="nav-drawer" id="nav-drawer">
     <a href="/#spec" onclick="closeMenu()"><span lang-key="en">Spec</span><span lang-key="es">Especificación</span></a>
+    <a href="/#registry-live" onclick="closeMenu()"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a>
     <a href="https://agent.soulid.io" target="_blank" rel="noopener" onclick="closeMenu()"><span lang-key="en">Agents</span><span lang-key="es">Agentes</span></a>
     <a href="/registry" onclick="closeMenu()"><span lang-key="en">Registry</span><span lang-key="es">Registry</span></a>
     <a href="/cli" onclick="closeMenu()">CLI</a>
@@ -1221,6 +1339,45 @@
 
   <div class="divider"></div>
 
+  <!-- Live Registry Widget -->
+  <section id="registry-live">
+    <div class="container">
+      <div class="section-label"><span lang-key="en">Live Registry</span><span lang-key="es">Registry en Vivo</span></div>
+      <h2>
+        <span lang-block="en">Souls registered right now</span>
+        <span lang-block="es">Almas registradas ahora mismo</span>
+      </h2>
+      <p class="section-desc">
+        <span lang-block="en">Every agent in this registry has a portable, resolvable identity.</span>
+        <span lang-block="es">Cada agente en este registry tiene una identidad portable y resoluble.</span>
+      </p>
+      <div class="registry-stats" id="registry-stats">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total">—</div>
+          <div class="stat-label"><span lang-key="en">Registered Souls</span><span lang-key="es">Almas Registradas</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-archetypes">—</div>
+          <div class="stat-label"><span lang-key="en">Archetypes</span><span lang-key="es">Arquetipos</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number live-dot-wrap"><span class="live-dot"></span><span lang-key="en">Live</span><span lang-key="es">En vivo</span></div>
+          <div class="stat-label">registry.soulid.io</div>
+        </div>
+      </div>
+      <div class="souls-grid" id="souls-grid">
+        <div class="souls-loading"><span lang-key="en">Loading souls…</span><span lang-key="es">Cargando almas…</span></div>
+      </div>
+      <div class="registry-cta">
+        <a href="https://registry.soulid.io/souls?limit=20" target="_blank" class="btn btn-secondary">
+          <span lang-key="en">Browse all souls →</span><span lang-key="es">Ver todas las almas →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- Footer CTA -->
   <section class="footer-cta">
     <div class="container">
@@ -1307,6 +1464,41 @@
     document.getElementById('hamburger').classList.remove('open');
     document.getElementById('nav-drawer').classList.remove('open');
   }
+
+  // Live Registry Widget
+  async function loadRegistry() {
+    try {
+      const res = await fetch('https://registry.soulid.io/souls?limit=12');
+      const data = await res.json();
+      const items = data.items || [];
+      const total = data.total || items.length;
+
+      // Stats
+      document.getElementById('stat-total').textContent = total;
+      const archetypes = new Set(items.map(s => s.archetype).filter(Boolean));
+      document.getElementById('stat-archetypes').textContent = archetypes.size || '—';
+
+      // Grid
+      const grid = document.getElementById('souls-grid');
+      if (!items.length) {
+        grid.innerHTML = '<div class="souls-loading">No souls found.</div>';
+        return;
+      }
+      grid.innerHTML = items.map(soul => {
+        const slug = soul.soul_id.split(':')[1];
+        const agentUrl = `https://agent.soulid.io/agents/${slug}`;
+        return `
+          <a href="${agentUrl}" target="_blank" class="soul-card" style="text-decoration:none;">
+            <div class="soul-id-badge">⚡ ${soul.soul_id}</div>
+            <div class="soul-name">${soul.name || slug}</div>
+            <div class="soul-archetype">${soul.archetype || 'agent'}</div>
+          </a>`;
+      }).join('');
+    } catch(e) {
+      document.getElementById('souls-grid').innerHTML = '<div class="souls-loading">Could not load registry.</div>';
+    }
+  }
+  loadRegistry();
 
   </script>
 </body>
