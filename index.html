@@ -905,30 +905,45 @@
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 20px;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: default;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
     .soul-card:hover {
       border-color: var(--purple);
       transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(124,58,237,0.15);
+    }
+    .soul-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .soul-icon { font-size: 20px; }
+    .soul-arch-tag {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--purple-light);
+      background: rgba(167,139,250,0.1);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: 4px;
+      padding: 2px 7px;
     }
     .soul-id-badge {
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
+      font-family: var(--font-mono);
+      font-size: 10px;
       color: var(--cyan);
-      background: rgba(6,182,212,0.08);
-      border: 1px solid rgba(6,182,212,0.2);
-      border-radius: 4px;
-      padding: 3px 8px;
-      margin-bottom: 10px;
-      display: inline-block;
+      opacity: 0.75;
       word-break: break-all;
     }
     .soul-name {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 4px;
     }
     .soul-archetype {
       font-size: 12px;
@@ -1369,7 +1384,7 @@
         <div class="souls-loading"><span lang-key="en">Loading souls…</span><span lang-key="es">Cargando almas…</span></div>
       </div>
       <div class="registry-cta">
-        <a href="https://registry.soulid.io/souls?limit=20" target="_blank" class="btn btn-secondary">
+        <a href="https://agent.soulid.io" target="_blank" class="btn btn-secondary">
           <span lang-key="en">Browse all souls →</span><span lang-key="es">Ver todas las almas →</span>
         </a>
       </div>
@@ -1468,13 +1483,23 @@
   // Live Registry Widget
   async function loadRegistry() {
     try {
-      const res = await fetch('https://registry.soulid.io/souls?limit=12');
+      // Fetch 12 random souls + total count
+      const res  = await fetch('https://registry.soulid.io/souls?limit=12');
       const data = await res.json();
       const items = data.items || [];
       const total = data.total || items.length;
 
-      // Stats
-      document.getElementById('stat-total').textContent = total;
+      // Animate counter
+      const totalEl = document.getElementById('stat-total');
+      let count = 0;
+      const step = Math.ceil(total / 40);
+      const timer = setInterval(() => {
+        count = Math.min(count + step, total);
+        totalEl.textContent = count.toLocaleString();
+        if (count >= total) clearInterval(timer);
+      }, 30);
+
+      // Archetype count — unique archetypes across all items
       const archetypes = new Set(items.map(s => s.archetype).filter(Boolean));
       document.getElementById('stat-archetypes').textContent = archetypes.size || '—';
 
@@ -1484,14 +1509,26 @@
         grid.innerHTML = '<div class="souls-loading">No souls found.</div>';
         return;
       }
+
+      const ARCHETYPE_ICONS = {
+        assistant: '🤖', analyst: '📊', coder: '💻',
+        writer: '✍️', researcher: '🔍', devops: '⚙️',
+        agent: '⚡', custom: '✨',
+      };
+
       grid.innerHTML = items.map(soul => {
-        const slug = soul.soul_id.split(':')[1];
+        const slug     = soul.soul_id.split(':')[1];
         const agentUrl = `https://agent.soulid.io/agents/${slug}`;
+        const icon     = ARCHETYPE_ICONS[soul.archetype] || '⚡';
+        const arch     = soul.archetype || 'agent';
         return `
           <a href="${agentUrl}" target="_blank" class="soul-card" style="text-decoration:none;">
-            <div class="soul-id-badge">⚡ ${soul.soul_id}</div>
+            <div class="soul-card-header">
+              <span class="soul-icon">${icon}</span>
+              <span class="soul-arch-tag">${arch}</span>
+            </div>
             <div class="soul-name">${soul.name || slug}</div>
-            <div class="soul-archetype">${soul.archetype || 'agent'}</div>
+            <div class="soul-id-badge">⚡ ${soul.soul_id}</div>
           </a>`;
       }).join('');
     } catch(e) {
